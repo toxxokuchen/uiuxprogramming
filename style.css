@@ -67,11 +67,16 @@ h2 {
 }
 
 .feature-list {
-  list-style: none;
+  ist-style-type: none;
   padding-left: 0;
   margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: stretch;
+  gap: 24px;
 }
 .feature-card {
+  min-width: 0;
   list-style: none;
   padding: 20px 24px;
   margin-bottom: 16px;
@@ -110,27 +115,101 @@ h2 {
   flex: 1;
 }
 .service-image {
-  width: 360px;
-  max-width: 100%;
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
   border-radius: 14px;
+}
+
+card-list {
+  display: flex;
+  gap: 20px;
+}
+.card {
+  flex: 1 1 260px;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+  header {
+    padding-top: 32px;
+    padding-bottom: 24px;
+  }
+  section {
+    margin-top: 40px;
+  }
+  h1 {
+    font-size: 36px;
+  }
+  h2 {
+    font-size: 28px;
+  }
+  .about-layout {
+    flex-direction: column;
+  }
+  .service-image {
+    max-width: 100%;
+  }
+  body {
+    font-size: 16px;
+  }
+  header {
+    padding-top: 32px;
+    padding-bottom: 24px;
+  }
+  section {
+    margin-top: 40px;
+  }
+  h1 {
+    font-size: 36px;
+  }
+  h2 {
+    font-size: 28px;
+  }
+  nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  nav a {
+    padding: 8px 0;
+  }
+  .features-list {
+    grid-template-columns: 1fr;
+  }
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  input,
+  button {
+    width: 100%;
+  }
+  button {
+    min-height: 48px;
+  }
 }
 
 .subscribe-section {
   background-color: #f0efff;
+  min-width: 300;
 }
 .subscribe-form {
-  display: flex;
+  display: grid;
   align-items: flex-end;
   gap: 12px;
-  max-width: 570px;
+  max-width: 750px;
 }
 .email-field {
-  flex: 1;
   margin: 0;
   font-weight: 700;
 }
 input[type="email"] {
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr;
   width: 100%;
   margin-top: 8px;
   padding: 12px 14px;
@@ -142,11 +221,15 @@ input[type="email"] {
     outline-color 0.2s ease;
 }
 input[type="email"]:focus {
+  display: grid;
+  grid-template-columns: 2.5fr;
   border-color: #5b50c8;
   outline: 3px solid #d9d6ff;
   outline-offset: 2px;
 }
 .primary-button {
+  display: grid;
+  grid-template-columns: 1.5fr;
   padding: 12px 18px;
   border: 0;
   border-radius: 8px;
