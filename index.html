@@ -122,9 +122,9 @@ UX 질문:
         </ol>
       </section>
 
-      <section id="subscribe" class="content-section subscribe-section">
+      <section id="subscribe" class="content-section subscribe-card">
         <h2>매일 리마인더 받기</h2>
-        <form class="subscribe-form">
+        <form id="subscribe-form">
           <label for="email">이메일:</label>
           <input
             type="email"
@@ -132,9 +132,10 @@ UX 질문:
             name="email"
             placeholder="name@example.com"
           />
-          <button class="primary-button" type="submit">
+          <button id="subscribeButton" type="submit">
             이메일로 리마인더 받기
           </button>
+          <p id="subscribeMessage" aria-live="polite"></p>
         </form>
       </section>
     </main>
@@ -142,5 +143,7 @@ UX 질문:
     <footer class="site-footer">
       ⓒ 2026 외국어 단어 학습 서비스 Vocabulet.
     </footer>
+
+    <script src="script.js"></script>
   </body>
 </html>

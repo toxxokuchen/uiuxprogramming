@@ -193,11 +193,35 @@ card-list {
   }
 }
 
-.subscribe-section {
+#subscribeMessage {
+  margin-top: 16px;
+  color: #555763;
+}
+#subscribeMessage.is-success {
+  color: #245c3a;
+  background-color: #e7f7ed;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+#subscribeMessage.is-error {
+  color: #7a1f1f;
+  background-color: #fbeaea;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+#subscribeButton.disabled {
+  color: #fff;
+  background-color: #bfc1d1;
+  cursor: not-allowed;
+}
+
+.subscribe-card {
   background-color: #f0efff;
   min-width: 300;
 }
-.subscribe-form {
+#subscribe-form {
   display: grid;
   align-items: flex-end;
   gap: 12px;
@@ -227,7 +251,7 @@ input[type="email"]:focus {
   outline: 3px solid #d9d6ff;
   outline-offset: 2px;
 }
-.primary-button {
+#subscribeButton {
   display: grid;
   grid-template-columns: 1.5fr;
   padding: 12px 18px;
