@@ -45,6 +45,7 @@ UX 질문:
         <a href="#features">기능 소개</a>
         <a href="#steps">이용 방법</a>
         <a href="#subscribe">리마인더 받기</a>
+        <a href="#config">화면 테마</a>
       </nav>
     </header>
 
@@ -67,9 +68,9 @@ UX 질문:
         </div>
       </section>
 
-      <section id="features">
+      <section id="features" class="content-section">
         <h2>기능 소개</h2>
-        <ul class="features-list">
+        <ul class="feature-list">
           <li class="feature-card">
             <h3>일일 학습 단어 기록 및 복습 리마인더</h3>
             <p>
@@ -123,20 +124,40 @@ UX 질문:
       </section>
 
       <section id="subscribe" class="content-section subscribe-card">
-        <h2>매일 리마인더 받기</h2>
-        <form id="subscribe-form">
-          <label for="email">이메일:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="name@example.com"
-          />
-          <button id="subscribeButton" type="submit">
-            이메일로 리마인더 받기
-          </button>
-          <p id="subscribeMessage" aria-live="polite"></p>
-        </form>
+        <article class="event-card">
+          <h3>이메일로 리마인더 받기</h3>
+          <form id="subscribe-form">
+            <label id="emailInput" for="email">이메일:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@example.com"
+            />
+            <label class="agree-row">
+              <input type="checkbox" class="agreeCheck" />
+              (필수) 사이트 약관에 동의합니다.
+            </label>
+            <label class="agree-row">
+              <input type="checkbox" class="agreeCheck" />
+              (선택) 이메일로 프로모션 정보를 받는 데에 동의합니다.
+            </label>
+            <p id="agreeMessage" aria-live="polite">
+              동의 후 이메일을 수신할 수 있습니다.
+            </p>
+            <button id="subscribeButton" type="submit" disabled>
+              이메일로 리마인더 받기
+            </button>
+            <p id="subscribeMessage" aria-live="polite"></p>
+          </form>
+        </article>
+      </section>
+
+      <section id="config" class="content-section">
+        <article class="event-card">
+          <h3>화면 테마</h3>
+          <button id="themeButton" type="button">다크 테마로 바꾸기</button>
+        </article>
       </section>
     </main>
 

@@ -2,6 +2,22 @@
   box-sizing: border-box;
 }
 
+body.dark {
+  color: #f4f4f8;
+  background-color: #20212a;
+}
+body.dark p,
+body.dark nav a {
+  color: #d8d8e2;
+}
+body.dark .feature-card,
+body.dark .content-section,
+body.dark .event-card,
+body.dark .subscribe-card {
+  border-color: #50515f;
+  background-color: #2d2e38;
+}
+
 body {
   margin: 0;
   color: #292a31;
@@ -84,13 +100,6 @@ h2 {
   border-radius: 12px;
   background: #f4f3ff;
 }
-.featur-card p {
-  flex: 1;
-  padding: 24;
-  border: 1px solid #d7d4f6;
-  border-radius: 14px;
-  background-color: #f4f3ff;
-}
 
 .steps-list {
   margin: 0;
@@ -100,7 +109,9 @@ h2 {
   margin-top: 10px;
 }
 .content-section {
+  margin-top: 24px;
   padding: 40px;
+  min-width: 200px;
   border: 1px solid #e0e1ec;
   border-radius: 18px;
   background: #fff;
@@ -122,7 +133,7 @@ h2 {
   border-radius: 14px;
 }
 
-card-list {
+.card-list {
   display: flex;
   gap: 20px;
 }
@@ -191,6 +202,14 @@ card-list {
   button {
     min-height: 48px;
   }
+  .agree-row {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+  }
+  .agreeCheck {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 #subscribeMessage {
@@ -210,11 +229,6 @@ card-list {
   padding: 12px;
   border-radius: 10px;
   font-weight: 700;
-}
-#subscribeButton.disabled {
-  color: #fff;
-  background-color: #bfc1d1;
-  cursor: not-allowed;
 }
 
 .subscribe-card {
@@ -261,6 +275,26 @@ input[type="email"]:focus {
   font: inherit;
   font-weight: 700;
   background-color: #5b50c8;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+#subscribeButton:disabled {
+  color: #fff;
+  background-color: #686975;
+  cursor: not-allowed;
+}
+#themeButton {
+  display: grid;
+  grid-template-columns: 1.5fr;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  background-color: #66666c;
   cursor: pointer;
   transition:
     background-color 0.2s ease,
