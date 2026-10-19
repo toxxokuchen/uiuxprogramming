@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Vocabulet</title>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <h1>보카블릿</h1>
+      <p class="header-description">오늘도 단어를 학습합시다.</p>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <a href="#daily-review">일일 복습</a>
+        <a href="#add-word">단어 등록</a>
+        <a href="#wordbook">단어장</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="daily-review" class="content-section">
+        <h2>일일 단어 복습</h2>
+        <p class="review-progress" aria-live="polite">1 / 10</p>
+
+        <article class="flash-card" id="flashCard">
+          <button
+            type="button"
+            class="flash-card-inner"
+            id="flipButton"
+            aria-label="카드 뒤집기"
+          >
+            <div class="flash-card-front">
+              <span class="word-language"></span>
+              <strong class="word-text"></strong>
+            </div>
+            <div class="flash-card-back">
+              <p class="word-meaning"></p>
+              <p class="word-example"></p>
+            </div>
+          </button>
+        </article>
+
+        <div class="review-actions">
+          <button type="button" id="knowButton">알고 있어요</button>
+          <button type="button" id="unknownButton">모르겠어요</button>
+        </div>
+      </section>
+
+      <section id="add-word" class="content-section">
+        <h2>새로운 단어 등록</h2>
+        <form id="word-form">
+          <label for="wordLanguage">언어</label>
+          <select id="wordLanguage" name="language">
+            <option>영어</option>
+            <option>일본어</option>
+            <option>중국어</option>
+            <option>스페인어</option>
+            <option>프랑스어</option>
+          </select>
+
+          <label for="wordInput">단어</label>
+          <input type="text" id="wordInput" name="word" />
+
+          <label for="meaningInput">뜻</label>
+          <input type="text" id="meaningInput" name="meaning" />
+
+          <label for="exampleInput">예문 (선택)</label>
+          <textarea id="exampleInput" name="example"></textarea>
+
+          <button type="submit" id="wordSubmit" disabled>단어 등록</button>
+          <button type="button" id="editCancel" hidden>수정 취소</button>
+
+          <p id="wordMessage" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="wordbook" class="content-section">
+        <h2>단어장</h2>
+        <ul class="word-list">
+          <li class="word-card">
+            <h3 class="word-text">resilient</h3>
+            <p class="word-meaning">회복력 있는</p>
+            <p class="word-example">She is a resilient person.</p>
+            <p class="word-meta">
+              <span class="word-language">영어</span> 복습
+              <span class="review-count">0</span>회
+            </p>
+            <div class="card-actions">
+              <button type="button" class="edit-button">수정</button>
+              <button type="button" class="delete-button">삭제</button>
+            </div>
+          </li>
+          <li class="word-card">
+            <h3 class="word-text">勉強</h3>
+            <p class="word-meaning">공부</p>
+            <p class="word-example"></p>
+            <p class="word-meta">
+              <span class="word-language">일본어</span> 복습
+              <span class="review-count">0</span>회
+            </p>
+            <div class="card-actions">
+              <button type="button" class="edit-button">수정</button>
+              <button type="button" class="delete-button">삭제</button>
+            </div>
+          </li>
+          <li class="word-card" hidden>
+            <h3 class="word-text"></h3>
+            <p class="word-meaning"></p>
+            <p class="word-example"></p>
+            <p class="word-meta">
+              <span class="word-language"></span> 복습
+              <span class="review-count">0</span>회
+            </p>
+            <div class="card-actions">
+              <button type="button" class="edit-button">수정</button>
+              <button type="button" class="delete-button">삭제</button>
+            </div>
+          </li>
+          <li class="word-card" hidden>
+            <h3 class="word-text"></h3>
+            <p class="word-meaning"></p>
+            <p class="word-example"></p>
+            <p class="word-meta">
+              <span class="word-language"></span> 복습
+              <span class="review-count">0</span>회
+            </p>
+            <div class="card-actions">
+              <button type="button" class="edit-button">수정</button>
+              <button type="button" class="delete-button">삭제</button>
+            </div>
+          </li>
+          <li class="word-card" hidden>
+            <h3 class="word-text"></h3>
+            <p class="word-meaning"></p>
+            <p class="word-example"></p>
+            <p class="word-meta">
+              <span class="word-language"></span> 복습
+              <span class="review-count">0</span>회
+            </p>
+            <div class="card-actions">
+              <button type="button" class="edit-button">수정</button>
+              <button type="button" class="delete-button">삭제</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section id="config" class="content-section">
+        <article class="event-card">
+          <h3>화면 테마</h3>
+          <button id="themeButton" class="primary-button" type="button">
+            다크 테마로 바꾸기
+          </button>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      ⓒ 2026 외국어 단어 학습 서비스 Vocabulet.
+    </footer>
+    <script src="script.js"></script>
+    <script src="home.js"></script>
+  </body>
+</html>
