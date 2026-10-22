@@ -45,8 +45,9 @@ UX 질문:
         <a href="#features">기능 소개</a>
         <a href="#steps">이용 방법</a>
         <a href="#subscribe">리마인더 받기</a>
-        <a href="#config">화면 테마</a>
         <a href="#goto-service">서비스 체험하러 가기</a>
+        <a href="#auth">로그인/가입</a>
+        <a href="#config">화면 테마</a>
       </nav>
     </header>
 
@@ -168,6 +169,167 @@ UX 질문:
         </article>
       </section>
 
+      <section id="auth" class="content-section">
+        <h2>로그인 / 회원가입</h2>
+
+        <div class="auth-tabs" role="tablist">
+          <button
+            type="button"
+            id="loginTab"
+            class="auth-tab is-active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="loginPanel"
+          >
+            로그인
+          </button>
+          <button
+            type="button"
+            id="signupTab"
+            class="auth-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="signupPanel"
+          >
+            회원가입
+          </button>
+        </div>
+
+        <article id="loginPanel" class="event-card auth-panel" role="tabpanel">
+          <h3>로그인</h3>
+          <form id="login-form" novalidate>
+            <label for="loginEmail">이메일</label>
+            <input
+              type="email"
+              id="loginEmail"
+              name="email"
+              placeholder="name@example.com"
+              autocomplete="email"
+            />
+            <p class="field-hint" id="loginEmailHint" aria-live="polite"></p>
+
+            <label for="loginPassword">비밀번호</label>
+            <div class="password-wrap">
+              <input
+                type="password"
+                id="loginPassword"
+                name="password"
+                autocomplete="current-password"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                data-target="loginPassword"
+                aria-label="비밀번호 표시"
+                hidden
+              >
+                표시
+              </button>
+            </div>
+            <p class="field-hint" id="capsHint" aria-live="polite"></p>
+
+            <p id="loginMessage" aria-live="polite"></p>
+            <button id="loginButton" type="submit" disabled>로그인</button>
+          </form>
+        </article>
+
+        <article
+          id="signupPanel"
+          class="event-card auth-panel is-hidden"
+          role="tabpanel"
+        >
+          <h3>회원가입</h3>
+          <form id="signup-form" novalidate>
+            <label for="signupName">이름(닉네임)</label>
+            <input
+              type="text"
+              id="signupName"
+              name="name"
+              autocomplete="nickname"
+            />
+            <p class="field-hint" id="signupNameHint" aria-live="polite"></p>
+
+            <label for="signupEmail">이메일</label>
+            <input
+              type="email"
+              id="signupEmail"
+              name="email"
+              placeholder="name@example.com"
+              autocomplete="email"
+            />
+            <p class="field-hint" id="signupEmailHint" aria-live="polite"></p>
+
+            <label for="signupPassword">비밀번호</label>
+            <div class="password-wrap">
+              <input
+                type="password"
+                id="signupPassword"
+                name="password"
+                autocomplete="new-password"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                data-target="signupPassword"
+                aria-label="비밀번호 표시"
+                hidden
+              >
+                표시
+              </button>
+            </div>
+            <div class="strength" aria-hidden="true">
+              <div id="strengthBar" class="strength-bar" data-level="0"></div>
+            </div>
+
+            <label for="signupPasswordConfirm">비밀번호 확인</label>
+            <div class="password-wrap">
+              <input
+                type="password"
+                id="signupPasswordConfirm"
+                name="passwordConfirm"
+                autocomplete="new-password"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                data-target="signupPasswordConfirm"
+                aria-label="비밀번호 확인 표시"
+                hidden
+              >
+                표시
+              </button>
+
+              <p id="strengthText" class="field-hint" aria-live="polite">
+                비밀번호 강도: -
+              </p>
+              <ul id="passwordRules" class="rules">
+                <li data-rule="length">8자 이상</li>
+                <li data-rule="letter">영문 포함</li>
+                <li data-rule="number">숫자 포함</li>
+                <li data-rule="special">특수문자 포함 (강도 상승)</li>
+              </ul>
+            </div>
+            <p class="field-hint" id="confirmHint" aria-live="polite"></p>
+
+            <p id="signupMessage" aria-live="polite"></p>
+            <label class="agree-row">
+              <input type="checkbox" class="signupAgree" />
+              (필수) 사이트 약관에 동의합니다.
+            </label>
+            <p id="signupMessage" aria-live="polite"></p>
+            <button id="goLoginButton" type="button" class="is-hidden" hidden>
+              로그인하러 가기
+            </button>
+            <button id="signupButton" type="submit" disabled>가입하기</button>
+          </form>
+        </article>
+
+        <div id="authStatus" class="is-hidden" aria-live="polite">
+          <p id="welcomeMessage"></p>
+          <button id="logoutButton" type="button">로그아웃</button>
+        </div>
+      </section>
+
       <section id="config" class="content-section">
         <article class="event-card">
           <h3>화면 테마</h3>
@@ -184,5 +346,6 @@ UX 질문:
 
     <script src="script.js"></script>
     <script src="intro.js"></script>
+    <script src="auth.js"></script>
   </body>
 </html>
