@@ -777,6 +777,13 @@ input[type="text"] {
   color: #245c3a;
 }
 
+.is-success {
+  color: #245c3a;
+}
+.is-error {
+  color: #7a1f1f;
+}
+
 [hidden] {
   display: none !important;
 }

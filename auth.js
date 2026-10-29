@@ -90,8 +90,12 @@ function checkConfirm() {
     showMessage(confirmHint, "", null);
   } else if (isConfirmOk()) {
     showMessage(confirmHint, "비밀번호가 일치합니다.", "success");
+    confirmHint.classList.remove("is-error");
+    confirmHint.classList.add("is-success");
   } else {
     showMessage(confirmHint, "비밀번호가 일치하지 않습니다.", "error");
+    confirmHint.classList.remove("is-success");
+    confirmHint.classList.add("is-error");
   }
 }
 
