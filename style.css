@@ -37,6 +37,10 @@ body.dark .delete-button {
 body.dark .delete-button:hover {
   background-color: #3d2a2f;
 }
+body.dark .delete-button:focus {
+  outline: 3px solid #f2b8b8;
+  outline-offset: 3px;
+}
 body.dark .flash-card-inner {
   color: #ededfc;
   background-color: #20212a;
@@ -67,6 +71,10 @@ body.dark #unknownButton {
 body.dark #unknownButton:hover {
   background-color: #3a3a4d;
 }
+body.dark #unknownButton:focus {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 3px;
+}
 
 body.dark .edit-button {
   border-color: #50515f;
@@ -75,13 +83,50 @@ body.dark .edit-button {
 body.dark .edit-button:hover {
   background-color: #3a3a4d;
 }
+body.dark .edit-button:focus {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 3px;
+}
+body.dark #word-form #wordSubmit {
+  border-color: #50515f;
+  color: #f4f4f8;
+  background-color: #6e37b6;
+}
+body.dark #word-form #wordSubmit:hover {
+  background-color: #9775d6;
+}
+body.dark #word-form #wordSubmit:focus {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 3px;
+}
+body.dark #word-form #wordSubmit:disabled {
+  color: #f4f4f8;
+  background-color: #686975;
+  cursor: not-allowed;
+  outline: 0px;
+}
 body.dark #word-form #editCancel {
   border-color: #50515f;
   color: #f4f4f8;
   background-color: #2d2e38;
 }
-body.dark .word-card.is-editing {
-  outline-color: #50515f;
+body.dark #word-form #editCancel:focus {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 3px;
+}
+
+#site-logo {
+  text-decoration: none;
+  color: #2b2a2c;
+}
+body.dark #site-logo {
+  color: #f4f4f8;
+}
+.header-title {
+  line-height: 0.8;
+  margin-top: 8px;
+  font-weight: 700;
+  color: #5b50c8;
 }
 
 #unknownButton {
@@ -91,6 +136,10 @@ body.dark .word-card.is-editing {
 }
 #unknownButton:hover {
   background-color: #48484e;
+}
+#unknownButton:focus {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 3px;
 }
 
 body {
@@ -308,14 +357,41 @@ h2 {
 .edit-button:hover {
   background-color: #f0efff;
 }
+.edit-button:focus {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 3px;
+}
+
+#word-form #wordSubmit {
+  color: #fff;
+  background-color: #5c37b3;
+}
+#word-form #wordSubmit:focus {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 3px;
+}
+#word-form #wordSubmit:hover {
+  outline: 3px solid #b9b4ef;
+  background-color: #8e66e9;
+}
+#word-form #wordSubmit:disabled {
+  color: #fff;
+  background-color: #686975;
+  cursor: not-allowed;
+  outline: 0px;
+}
+
 #word-form #editCancel {
   border: 1px solid #bfc1d1;
   color: #292a31;
   background-color: #fff;
 }
-.word-card.is-editing {
-  border-color: #5b50c8;
-  outline: 3px solid #d9d6ff;
+#word-form #editCancel:hover {
+  background-color: #f0efff;
+}
+#word-form #editCancel:focus {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 3px;
 }
 
 #subscribeMessage {
@@ -600,6 +676,10 @@ select {
 .delete-button:hover {
   background-color: #fbeaea;
 }
+.delete-button:focus {
+  outline: 3px solid #f2b8b8;
+  outline-offset: 3px;
+}
 
 .review-progress {
   margin-bottom: 12px;
@@ -706,6 +786,10 @@ select {
   max-width: none;
   min-height: 48px;
 }
+#daily-review .review-actions button:focus {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 3px;
+}
 
 @media (max-width: 768px) {
   #daily-review .review-actions {
@@ -714,6 +798,14 @@ select {
   #daily-review .review-actions button {
     padding-left: 8px;
     padding-right: 8px;
+  }
+  #daily-review .review-actions button:focus {
+    outline: 3px solid #b9b4ef;
+    outline-offset: 3px;
+  }
+  #daily-review .flash-card-inner {
+    min-height: clamp(200px, 50vw, 260px);
+    max-width: 480px;
   }
 }
 .is-hidden {
@@ -782,6 +874,84 @@ input[type="text"] {
 }
 .is-error {
   color: #7a1f1f;
+}
+
+.site-nav a.is-current {
+  color: #5b50c8;
+  background-color: #d9d7ff;
+  box-shadow: inset 0 -2px 0 #5b50c8;
+}
+body.dark .site-nav a.is-current {
+  color: #ffff;
+  background-color: #4336b6c9;
+  box-shadow: inset 0 -4px 0 #4336b6;
+}
+
+.word-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.filter-button {
+  padding: 8px 16px;
+  border: 1px solid #bfc1d1;
+  border-radius: 999px;
+  background: #fff;
+  color: #292a31;
+  font: inherit;
+  cursor: pointer;
+}
+.filter-button.active {
+  border-color: #5b50c8;
+  background: #5b50c8;
+  color: #fff;
+  font-weight: 700;
+}
+.filter-button:focus-visible {
+  outline: 3px solid #b9b4ef;
+  outline-offset: 2px;
+}
+.word-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.word-list-empty {
+  grid-column: 1 / -1;
+  color: #5e6272;
+}
+body.dark .filter-button {
+  background: #2d2e38;
+  color: #f4f4f8;
+  border-color: #50515f;
+}
+body.dark .filter-button.active {
+  background: #5b50c8;
+  border-color: #5b50c8;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .menu-toggle {
+    display: inline-flex;
+  }
+  .site-header .site-nave {
+    display: none;
+  }
+  .site-header .site-nav.is-open {
+    display: block;
+  }
+  .site-nav ul {
+    display: grid;
+    gap: 8px;
+  }
 }
 
 [hidden] {

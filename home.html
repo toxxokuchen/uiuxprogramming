@@ -11,12 +11,12 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
       rel="stylesheet"
     />
-    <title>Vocabulet</title>
+    <title>Vocabulet</a></title>
   </head>
 
   <body>
     <header class="site-header">
-      <h1>보카블릿</h1>
+      <h1><a id="site-logo" href="index.html">Vocabulet</a></h1>
       <p class="header-description">오늘도 단어를 학습합시다.</p>
       <nav class="site-nav" aria-label="주요 메뉴">
         <a href="#daily-review">일일 복습</a>
@@ -84,6 +84,35 @@
 
       <section id="wordbook" class="content-section">
         <h2>단어장</h2>
+        <div class="word-filters" role="group" aria-label="단어 필터">
+          <button
+            type="button"
+            class="filter-button active"
+            data-filter="all"
+            aria-pressed="true"
+          >
+            전체
+          </button>
+          <button
+            type="button"
+            class="filter-button"
+            data-filter="known"
+            aria-pressed="false"
+          >
+            알고 있는 단어
+          </button>
+          <button
+            type="button"
+            class="filter-button"
+            data-filter="unknown"
+            aria-pressed="false"
+          >
+            모르는 단어
+          </button>
+        </div>
+        <p class="empty-state" id="emptyState" hidden>
+          등록된 단어가 없습니다.
+        </p>
         <ul class="word-list" id="wordList"></ul>
       </section>
 

@@ -14,6 +14,7 @@ const wordSubmit = document.querySelector("#wordSubmit");
 const editCancel = document.querySelector("#editCancel");
 
 const wordList = document.querySelector("#wordList");
+const filterButtons = document.querySelectorAll(".filter-button");
 
 const words = [
   {
@@ -23,6 +24,7 @@ const words = [
     meaning: "회복력 있는",
     example: "She is a resilient person.",
     reviewCount: 0,
+    known: false,
   },
   {
     id: 2,
@@ -31,14 +33,21 @@ const words = [
     meaning: "공부",
     example: "",
     reviewCount: 0,
+    known: false,
   },
 ];
 
 let nextId = 3;
-
 let editingId = null;
 let currentIndex = -1;
 let currentWord = null;
+currentFilter = "all";
+
+function getFilteredWords() {
+  if (currentFilter === "known") return words.filter((w) => w.known);
+  if (currentFilter === "unknown") return words.filter((w) => !w.known);
+  return words;
+}
 
 function updateProgress() {
   flashCard.hidden = words.length === 0;
@@ -79,13 +88,31 @@ function handleReviewClick(event) {
     return;
   }
 
-  if (event.currentTarget === knowButton && currentWord) {
-    currentWord.reviewCount++;
+  if (currentWord) {
+    if (event.currentTarget === knowButton) {
+      currentWord.known = true;
+      currentWord.reviewCount++;
+    } else {
+      currentWord.known = false;
+    }
     renderWordList();
   }
 
   currentIndex = (currentIndex + 1) % words.length;
   showCurrent();
+}
+
+function handleFilterClick(event) {
+  const button = event.target.closest(".filter-button");
+  if (!button) return;
+
+  currentFilter = button.dataset.filter;
+  filterButtons.forEach((btn) => {
+    const active = btn === button;
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", String(active));
+  });
+  renderWordList();
 }
 
 //
@@ -127,7 +154,16 @@ function createWordCard(item) {
 }
 
 function renderWordList() {
-  wordList.replaceChildren(...words.map(createWordCard));
+  const filtered = getFilteredWords();
+  if (filtered.length === 0) {
+    const emptyText =
+      words.length === 0
+        ? "등록된 단어가 없습니다."
+        : "해당하는 단어가 없습니다.";
+    wordList.replaceChildren(createElement("li", "word-list-empty", emptyText));
+    return;
+  }
+  wordList.replaceChildren(...filtered.map(createWordCard));
 }
 
 function handleWordInput() {
@@ -246,6 +282,10 @@ meaningInput.addEventListener("input", handleWordInput);
 wordList.addEventListener("click", handleEditClick);
 wordList.addEventListener("click", handleDeleteClick);
 editCancel.addEventListener("click", handleEditCancel);
+filterButtons.forEach((btn) =>
+  btn.addEventListener("click", handleFilterClick),
+);
 
+currentIndex = 0;
+showCurrent();
 renderWordList();
-unknownButton.click();
