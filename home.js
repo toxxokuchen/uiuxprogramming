@@ -1,8 +1,12 @@
 const flashCard = document.querySelector("#flashCard");
+const cardFront = document.querySelector("#cardFront");
+const cardBack = document.querySelector("#cardBack");
 const flipButton = document.querySelector("#flipButton");
 const knowButton = document.querySelector("#knowButton");
 const unknownButton = document.querySelector("#unknownButton");
+const reviewActions = document.querySelector("#reviewActions");
 const reviewProgress = document.querySelector(".review-progress");
+const liveStatus = document.querySelector("#liveStatus");
 
 const wordForm = document.querySelector("#word-form");
 const wordLanguage = document.querySelector("#wordLanguage");
@@ -14,7 +18,23 @@ const wordSubmit = document.querySelector("#wordSubmit");
 const editCancel = document.querySelector("#editCancel");
 
 const wordList = document.querySelector("#wordList");
+const wordCount = document.querySelector("#wordCount");
+const wordbookTitle = document.querySelector("#wordbook-title");
 const filterButtons = document.querySelectorAll(".filter-button");
+
+const LANG_CODES = {
+  영어: "en",
+  일본어: "ja",
+  중국어: "zh",
+  스페인어: "es",
+  프랑스어: "fr",
+};
+const FILTER_LABELS = {
+  all: "전체",
+  known: "알고 있는 단어",
+  unknown: "모르는 단어",
+};
+const langOf = (language) => LANG_CODES[language] || "";
 
 const words = [
   {
@@ -41,7 +61,20 @@ let nextId = 3;
 let editingId = null;
 let currentIndex = -1;
 let currentWord = null;
-currentFilter = "all";
+let currentFilter = "all";
+
+function announce(message) {
+  liveStatus.textContent = "";
+  setTimeout(() => {
+    liveStatus.textContent = message;
+  }, 50);
+}
+
+function setLang(element, language) {
+  const code = langOf(language);
+  if (code) element.lang = code;
+  else element.removeAttribute("lang");
+}
 
 function getFilteredWords() {
   if (currentFilter === "known") return words.filter((w) => w.known);
@@ -50,36 +83,63 @@ function getFilteredWords() {
 }
 
 function updateProgress() {
-  flashCard.hidden = words.length === 0;
-  reviewProgress.textContent =
-    words.length === 0
-      ? "등록된 단어가 없습니다."
-      : `${currentIndex + 1} / ${words.length}`;
+  const empty = words.length === 0;
+  flashCard.hidden = empty;
+  reviewActions.hidden = empty;
+  reviewProgress.textContent = empty
+    ? "등록된 단어가 없습니다."
+    : `${currentIndex + 1} / ${words.length}`;
 }
 
-function showCurrent() {
+function setFlipped(flipped) {
+  flashCard.classList.toggle("is-flipped", flipped);
+  flipButton.setAttribute("aria-expanded", String(flipped));
+  cardFront.toggleAttribute("inert", flipped);
+  cardFront.setAttribute("aria-hidden", String(flipped));
+  cardBack.toggleAttribute("inert", !flipped);
+  cardBack.setAttribute("aria-hidden", String(!flipped));
+  if (flipped && currentWord) {
+    announce(
+      currentWord.example
+        ? `뜻: ${currentWord.meaning}. 예문: ${currentWord.example}`
+        : `뜻: ${currentWord.meaning}.`,
+    );
+  }
+}
+
+function showCurrent(shouldAnnounce = true, prefix = "") {
   if (words.length === 0) {
     currentIndex = -1;
     currentWord = null;
+    setFlipped(false);
     updateProgress();
     return;
   }
   currentWord = words[currentIndex];
-  flashCard.classList.remove("is-flipped");
+  setFlipped(false);
   showInFlashCard(currentWord);
   updateProgress();
+  if (shouldAnnounce) {
+    announce(
+      `${prefix}${currentIndex + 1} / ${words.length}. ` +
+        `${currentWord.language} 단어: ${currentWord.word}`,
+    );
+  }
 }
 
 function showInFlashCard(item) {
+  const text = flashCard.querySelector(".word-text");
+  const example = flashCard.querySelector(".word-example");
   flashCard.querySelector(".word-language").textContent = item.language;
-  flashCard.querySelector(".word-text").textContent = item.word;
+  text.textContent = item.word;
   flashCard.querySelector(".word-meaning").textContent = item.meaning;
-  flashCard.querySelector(".word-example").textContent = item.example;
+  example.textContent = item.example;
+  setLang(text, item.language);
+  setLang(example, item.language);
 }
 
-//
 function handleFlipClick() {
-  flashCard.classList.toggle("is-flipped");
+  setFlipped(!flashCard.classList.contains("is-flipped"));
 }
 
 function handleReviewClick(event) {
@@ -88,18 +148,23 @@ function handleReviewClick(event) {
     return;
   }
 
+  let prefix = "";
   if (currentWord) {
-    if (event.currentTarget === knowButton) {
+    const known = event.currentTarget === knowButton;
+    if (known) {
       currentWord.known = true;
       currentWord.reviewCount++;
     } else {
       currentWord.known = false;
     }
+    prefix = known
+      ? "알고 있어요로 기록했습니다. "
+      : "모르겠어요로 기록했습니다. ";
     renderWordList();
   }
 
   currentIndex = (currentIndex + 1) % words.length;
-  showCurrent();
+  showCurrent(true, prefix);
 }
 
 function handleFilterClick(event) {
@@ -113,9 +178,9 @@ function handleFilterClick(event) {
     btn.setAttribute("aria-pressed", String(active));
   });
   renderWordList();
+  announce(wordCount.textContent);
 }
 
-//
 function createElement(tag, className, text) {
   const el = document.createElement(tag);
   if (className) el.className = className;
@@ -126,7 +191,15 @@ function createElement(tag, className, text) {
 function createWordCard(item) {
   const li = createElement("li", "word-card");
   li.dataset.id = item.id;
-  if (item.id === editingId) li.classList.add("is-editing");
+  if (item.id === editingId) {
+    li.classList.add("is-editing");
+    li.setAttribute("aria-current", "true");
+  }
+
+  const wordText = createElement("h3", "word-text", item.word);
+  setLang(wordText, item.language);
+  const example = createElement("p", "word-example", item.example);
+  setLang(example, item.language);
 
   const meta = createElement("p", "word-meta");
   meta.append(
@@ -139,14 +212,16 @@ function createWordCard(item) {
   const actions = createElement("div", "card-actions");
   const editButton = createElement("button", "edit-button", "수정");
   editButton.type = "button";
+  editButton.setAttribute("aria-label", `${item.word} 수정`);
   const deleteButton = createElement("button", "delete-button", "삭제");
   deleteButton.type = "button";
+  deleteButton.setAttribute("aria-label", `${item.word} 삭제`);
   actions.append(editButton, deleteButton);
 
   li.append(
-    createElement("h3", "word-text", item.word),
+    wordText,
     createElement("p", "word-meaning", item.meaning),
-    createElement("p", "word-example", item.example),
+    example,
     meta,
     actions,
   );
@@ -155,6 +230,7 @@ function createWordCard(item) {
 
 function renderWordList() {
   const filtered = getFilteredWords();
+  wordCount.textContent = `${FILTER_LABELS[currentFilter]} ${filtered.length}개`;
   if (filtered.length === 0) {
     const emptyText =
       words.length === 0
@@ -164,6 +240,17 @@ function renderWordList() {
     return;
   }
   wordList.replaceChildren(...filtered.map(createWordCard));
+}
+
+function focusEditButton(id) {
+  const button = wordList.querySelector(
+    `.word-card[data-id="${id}"] .edit-button`,
+  );
+  if (button) {
+    button.focus();
+    return true;
+  }
+  return false;
 }
 
 function handleWordInput() {
@@ -199,16 +286,17 @@ function handleWordSubmit(event) {
     example: exampleInput.value.trim(),
   };
   const isEdit = editingId !== null;
+  const editedId = editingId;
 
   if (isEdit) {
     const target = words.find((w) => w.id === editingId);
     Object.assign(target, fields);
     if (target === currentWord) showInFlashCard(target);
   } else {
-    words.push({ id: nextId++, reviewCount: 0, ...fields });
+    words.push({ id: nextId++, reviewCount: 0, ...fields, known: false });
     if (words.length === 1) {
       currentIndex = 0;
-      showCurrent();
+      showCurrent(false);
     } else {
       updateProgress();
     }
@@ -220,6 +308,12 @@ function handleWordSubmit(event) {
   wordMessage.textContent = isEdit
     ? `'${word}' 단어를 수정했습니다.`
     : `'${word}' 단어를 등록했습니다.`;
+
+  if (isEdit) {
+    if (!focusEditButton(editedId)) wordInput.focus();
+  } else {
+    wordInput.focus();
+  }
 }
 
 function handleEditClick(event) {
@@ -240,13 +334,21 @@ function handleEditClick(event) {
   wordSubmit.textContent = "단어 수정";
   editCancel.hidden = false;
   wordMessage.textContent = "";
-  document.querySelector("#add-word").scrollIntoView({ behavior: "smooth" });
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  document
+    .querySelector("#add-word")
+    .scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
   wordInput.focus();
 }
 
 function handleEditCancel() {
+  const id = editingId;
   resetWordForm();
   wordMessage.textContent = "";
+  if (id !== null && !focusEditButton(id)) wordbookTitle.focus();
 }
 
 function handleDeleteClick(event) {
@@ -255,25 +357,32 @@ function handleDeleteClick(event) {
 
   const id = Number(button.closest(".word-card").dataset.id);
   const index = words.findIndex((w) => w.id === id);
-  if (!confirm(`'${words[index].word}' 단어를 정말로 삭제하시겠습니까?`))
-    return;
+  const removedWord = words[index].word;
+  if (!confirm(`'${removedWord}' 단어를 정말로 삭제하시겠습니까?`)) return;
 
+  const visibleIndex = getFilteredWords().findIndex((w) => w.id === id);
   if (id === editingId) resetWordForm();
   words.splice(index, 1);
 
   if (index < currentIndex) {
-    currentIndex--; //
+    currentIndex--;
     updateProgress();
   } else if (index === currentIndex) {
-    currentIndex = Math.min(currentIndex, words.length - 1); //
-    showCurrent();
+    currentIndex = Math.min(currentIndex, words.length - 1);
+    showCurrent(false);
   } else {
     updateProgress();
   }
   renderWordList();
+
+  const deleteButtons = wordList.querySelectorAll(".delete-button");
+  const next = deleteButtons[Math.min(visibleIndex, deleteButtons.length - 1)];
+  (next || wordbookTitle).focus();
+  announce(`'${removedWord}' 단어를 삭제했습니다. ${wordCount.textContent}`);
 }
 
 flipButton.addEventListener("click", handleFlipClick);
+flashCard.addEventListener("click", handleFlipClick);
 knowButton.addEventListener("click", handleReviewClick);
 unknownButton.addEventListener("click", handleReviewClick);
 wordForm.addEventListener("submit", handleWordSubmit);
@@ -287,5 +396,5 @@ filterButtons.forEach((btn) =>
 );
 
 currentIndex = 0;
-showCurrent();
+showCurrent(false);
 renderWordList();
