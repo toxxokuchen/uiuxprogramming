@@ -34,39 +34,25 @@ UX 질문:
   </head>
 
   <body>
-    <a class="skip-link" href="#top">본문 바로가기</a>
-
-    <header class="site-header">
-      <h1 class="header-title">
-        <a id="site-logo" href="index.html">Vocabulet</a>
-      </h1>
-      <p class="header-title">외국어 단어 학습 서비스</p>
-      <p class="header-description">
-        학습하는 외국어의 단어를 편리하게 복습합니다.
-      </p>
-
-      <button
-        type="button"
-        id="menuButton"
-        class="menu-button"
-        aria-expanded="false"
-        aria-controls="mainNav"
-      >
-        메뉴
-      </button>
-      <nav id="mainNav" class="site-nav" aria-label="주요 메뉴">
-        <a href="#about">서비스 소개</a>
-        <a href="#features">기능 소개</a>
-        <a href="#steps">이용 방법</a>
-        <a href="#subscribe">리마인더 받기</a>
-        <a href="#goto-service">서비스 체험하러 가기</a>
-        <a href="#auth">로그인/가입</a>
-        <a href="#config">화면 테마</a>
-      </nav>
-    </header>
+    <site-header
+      subtitle="외국어 단어 학습 서비스"
+      description="학습하는 외국어의 단어를 편리하게 복습합니다."
+    >
+      <a href="#about">서비스 소개</a>
+      <a href="#features">기능 소개</a>
+      <a href="#steps">이용 방법</a>
+      <a href="#subscribe">리마인더 받기</a>
+      <a href="#goto-service">서비스 체험하러 가기</a>
+      <a href="#auth">로그인/가입</a>
+      <a href="#config">화면 테마</a>
+    </site-header>
 
     <main id="top" tabindex="-1">
-      <section id="about" class="content-section" aria-labelledby="about-title">
+      <section
+        id="about"
+        class="card card--section"
+        aria-labelledby="about-title"
+      >
         <h2 id="about-title">서비스 소개</h2>
         <div class="about-layout">
           <div class="about-text">
@@ -86,57 +72,61 @@ UX 질문:
 
       <section
         id="features"
-        class="content-section"
+        class="card card--section"
         aria-labelledby="features-title"
       >
         <h2 id="features-title">기능 소개</h2>
-        <ul class="feature-list" role="list">
-          <li class="feature-card">
+        <ul class="grid" role="list">
+          <li class="card card--tint">
             <h3>일일 학습 단어 기록 및 복습 리마인더</h3>
             <p>
               매일 학습한 단어를 기록할 수 있게 하며, 매일 접속할 때마다 기존에
               학습하여 기록한 단어를 퀴즈로 나타내 복습하게 합니다.
             </p>
           </li>
-          <li class="feature-card">
+          <li class="card card--tint">
             <h3>단어장 및 심화 학습</h3>
             <p>
               단어장에 기록한 단어를 관리하고, 이를 바탕으로 심화 학습을 할 수
               있습니다.
             </p>
           </li>
-          <li class="feature-card">
+          <li class="card card--tint">
             <h3>복습 기록 확인</h3>
             <p>학습한 단어에 대한 복습 기록을 확인할 수 있습니다.</p>
           </li>
         </ul>
       </section>
 
-      <section id="steps" class="content-section" aria-labelledby="steps-title">
+      <section
+        id="steps"
+        class="card card--section"
+        aria-labelledby="steps-title"
+      >
         <h2 id="steps-title">이용 방법</h2>
-        <ol>
-          <li class="steps-list">
+        <ol class="steps">
+          <li>
             <h3>회원가입 및 로그인</h3>
             <p>서비스를 이용하기 위해 회원가입을 하거나 로그인합니다.</p>
           </li>
-          <li class="steps-list">
+          <li>
             <h3>학습한 단어 기록</h3>
             <p>일일 학습한 단어를 기록합니다.</p>
           </li>
-          <li class="steps-list">
+          <li>
             <h3>단어 복습</h3>
             <p>
               기록한 단어를 바탕으로 퀴즈 풀이 등을 통해 복습할 수 있습니다.
             </p>
           </li>
-          <li class="steps-list">
+          <li>
             <h3>단어장 이용</h3>
             <p>
               단어장을 이용하여 등록한 단어를 관리하고 심화 학습을 진행할 수
               있습니다.
             </p>
           </li>
-          <li class="steps-list">
+          <li>
             <h3>복습 기록 확인</h3>
             <p>학습한 단어에 대한 복습 기록을 확인할 수 있습니다.</p>
           </li>
@@ -145,14 +135,15 @@ UX 질문:
 
       <section
         id="subscribe"
-        class="content-section subscribe-card"
+        class="card card--section card--tint"
         aria-labelledby="subscribe-title"
       >
-        <article class="event-card">
-          <h2 id="subscribe-title">이메일로 리마인더 받기</h2>
-          <form id="subscribe-form" novalidate>
-            <label for="email">이메일</label>
+        <h2 id="subscribe-title">이메일로 리마인더 받기</h2>
+        <form id="subscribe-form" class="form" novalidate>
+          <div class="field">
+            <label class="field__label" for="email">이메일</label>
             <input
+              class="field__control"
               type="email"
               id="email"
               name="email"
@@ -161,50 +152,61 @@ UX 질문:
               aria-describedby="subscribeMessage"
               aria-invalid="false"
             />
-            <fieldset class="agree-group">
-              <legend>약관 동의</legend>
-              <label class="agree-row">
-                <input type="checkbox" class="agreeCheck" required />
-                (필수) 사이트 약관에 동의합니다.
-              </label>
-              <label class="agree-row">
-                <input type="checkbox" class="agreeCheck" />
-                (선택) 이메일로 프로모션 정보를 받는 데에 동의합니다.
-              </label>
-            </fieldset>
-            <p id="agreeMessage" aria-live="polite">
-              필수 약관 동의 후 이메일을 수신할 수 있습니다.
-            </p>
-            <button id="subscribeButton" type="submit" disabled>
-              이메일로 리마인더 받기
-            </button>
-            <p id="subscribeMessage" aria-live="polite"></p>
-          </form>
-        </article>
+          </div>
+
+          <fieldset class="check-group">
+            <legend>약관 동의</legend>
+            <label class="check">
+              <input type="checkbox" class="agreeCheck" required />
+              (필수) 사이트 약관에 동의합니다.
+            </label>
+            <label class="check">
+              <input type="checkbox" class="agreeCheck" />
+              (선택) 이메일로 프로모션 정보를 받는 데에 동의합니다.
+            </label>
+          </fieldset>
+          <p id="agreeMessage" aria-live="polite">
+            필수 약관 동의 후 이메일을 수신할 수 있습니다.
+          </p>
+
+          <button id="subscribeButton" class="btn" type="submit" disabled>
+            이메일로 리마인더 받기
+          </button>
+          <p
+            id="subscribeMessage"
+            class="status--filled"
+            aria-live="polite"
+          ></p>
+        </form>
       </section>
 
       <section
         id="goto-service"
-        class="content-section"
+        class="card card--section"
         aria-labelledby="goto-title"
       >
-        <article class="event-card">
-          <h2 id="goto-title">서비스 체험하러 가기</h2>
-          <!-- 페이지 이동은 button이 아니라 링크 -->
-          <a id="gohomeButton" class="primary-button" href="home.html"
-            >서비스 체험하러 이동</a
-          >
-        </article>
+        <h2 id="goto-title">서비스 체험하러 가기</h2>
+        <a id="gohomeButton" class="btn" href="home.html"
+          >서비스 체험하러 이동</a
+        >
       </section>
 
-      <section id="auth" class="content-section" aria-labelledby="auth-title">
+      <section
+        id="auth"
+        class="card card--section"
+        aria-labelledby="auth-title"
+      >
         <h2 id="auth-title">로그인 / 회원가입</h2>
 
-        <div class="auth-tabs" role="tablist" aria-label="로그인 또는 회원가입">
+        <div
+          class="tabs auth-tabs"
+          role="tablist"
+          aria-label="로그인 또는 회원가입"
+        >
           <button
             type="button"
             id="loginTab"
-            class="auth-tab is-active"
+            class="btn btn--secondary"
             role="tab"
             aria-selected="true"
             aria-controls="loginPanel"
@@ -215,7 +217,7 @@ UX 질문:
           <button
             type="button"
             id="signupTab"
-            class="auth-tab"
+            class="btn btn--secondary"
             role="tab"
             aria-selected="false"
             aria-controls="signupPanel"
@@ -225,182 +227,187 @@ UX 질문:
           </button>
         </div>
 
-        <article
-          id="loginPanel"
-          class="event-card auth-panel"
-          role="tabpanel"
-          aria-labelledby="loginTab"
-        >
+        <article id="loginPanel" role="tabpanel" aria-labelledby="loginTab">
           <h3>로그인</h3>
-          <form id="login-form" novalidate>
-            <label for="loginEmail">이메일</label>
-            <input
-              type="email"
-              id="loginEmail"
-              name="email"
-              placeholder="name@example.com"
-              autocomplete="email"
-              aria-describedby="loginEmailHint"
-              aria-invalid="false"
-            />
-            <p class="field-hint" id="loginEmailHint" aria-live="polite"></p>
-
-            <label for="loginPassword">비밀번호</label>
-            <div class="password-wrap">
+          <form id="login-form" class="form" novalidate>
+            <div class="field">
+              <label class="field__label" for="loginEmail">이메일</label>
               <input
-                type="password"
-                id="loginPassword"
-                name="password"
-                autocomplete="current-password"
-                aria-describedby="capsHint"
+                class="field__control"
+                type="email"
+                id="loginEmail"
+                name="email"
+                placeholder="name@example.com"
+                autocomplete="email"
+                aria-describedby="loginEmailHint"
+                aria-invalid="false"
               />
-              <button
-                type="button"
-                class="toggle-password"
-                data-target="loginPassword"
-                data-name="비밀번호"
-                aria-label="비밀번호 표시"
-              >
-                표시
-              </button>
+              <p class="field__hint" id="loginEmailHint" aria-live="polite"></p>
             </div>
-            <p class="field-hint" id="capsHint" aria-live="polite"></p>
+
+            <div class="field">
+              <label class="field__label" for="loginPassword">비밀번호</label>
+              <div class="field__row">
+                <input
+                  class="field__control"
+                  type="password"
+                  id="loginPassword"
+                  name="password"
+                  autocomplete="current-password"
+                  aria-describedby="capsHint"
+                />
+                <button
+                  type="button"
+                  class="btn btn--secondary toggle-password"
+                  data-target="loginPassword"
+                  data-name="비밀번호"
+                  aria-label="비밀번호 표시"
+                >
+                  표시
+                </button>
+              </div>
+              <p class="field__hint" id="capsHint" aria-live="polite"></p>
+            </div>
 
             <p id="loginMessage" aria-live="polite"></p>
-            <button id="loginButton" type="submit" disabled>로그인</button>
+            <button id="loginButton" class="btn" type="submit" disabled>
+              로그인
+            </button>
           </form>
         </article>
 
         <article
           id="signupPanel"
-          class="event-card auth-panel"
           role="tabpanel"
           aria-labelledby="signupTab"
           hidden
         >
           <h3>회원가입</h3>
-          <form id="signup-form" novalidate>
-            <label for="signupName">이름(닉네임)</label>
-            <input
-              type="text"
-              id="signupName"
-              name="name"
-              autocomplete="nickname"
-              required
-              aria-describedby="signupNameHint"
-              aria-invalid="false"
-            />
-            <p class="field-hint" id="signupNameHint" aria-live="polite"></p>
-
-            <label for="signupEmail">이메일</label>
-            <input
-              type="email"
-              id="signupEmail"
-              name="email"
-              placeholder="name@example.com"
-              autocomplete="email"
-              required
-              aria-describedby="signupEmailHint"
-              aria-invalid="false"
-            />
-            <p class="field-hint" id="signupEmailHint" aria-live="polite"></p>
-
-            <label for="signupPassword">비밀번호</label>
-            <div class="password-wrap">
+          <form id="signup-form" class="form" novalidate>
+            <div class="field">
+              <label class="field__label" for="signupName">이름(닉네임)</label>
               <input
-                type="password"
-                id="signupPassword"
-                name="password"
-                autocomplete="new-password"
+                class="field__control"
+                type="text"
+                id="signupName"
+                name="name"
+                autocomplete="nickname"
                 required
-                aria-describedby="passwordRules strengthText"
-              />
-              <button
-                type="button"
-                class="toggle-password"
-                data-target="signupPassword"
-                data-name="비밀번호"
-                aria-label="비밀번호 표시"
-              >
-                표시
-              </button>
-            </div>
-            <div class="strength" aria-hidden="true">
-              <div id="strengthBar" class="strength-bar" data-level="0"></div>
-            </div>
-            <p id="strengthText" class="field-hint">비밀번호 강도: -</p>
-            <ul id="passwordRules" class="rules">
-              <li data-rule="length">8자 이상</li>
-              <li data-rule="letter">영문 포함</li>
-              <li data-rule="number">숫자 포함</li>
-              <li data-rule="special">특수문자 포함 (강도 상승)</li>
-            </ul>
-
-            <label for="signupPasswordConfirm">비밀번호 확인</label>
-            <div class="password-wrap">
-              <input
-                type="password"
-                id="signupPasswordConfirm"
-                name="passwordConfirm"
-                autocomplete="new-password"
-                required
-                aria-describedby="confirmHint"
+                aria-describedby="signupNameHint"
                 aria-invalid="false"
               />
-              <button
-                type="button"
-                class="toggle-password"
-                data-target="signupPasswordConfirm"
-                data-name="비밀번호 확인"
-                aria-label="비밀번호 확인 표시"
-              >
-                표시
-              </button>
+              <p class="field__hint" id="signupNameHint" aria-live="polite"></p>
             </div>
-            <p class="field-hint" id="confirmHint" aria-live="polite"></p>
 
-            <label class="agree-row">
+            <div class="field">
+              <label class="field__label" for="signupEmail">이메일</label>
+              <input
+                class="field__control"
+                type="email"
+                id="signupEmail"
+                name="email"
+                placeholder="name@example.com"
+                autocomplete="email"
+                required
+                aria-describedby="signupEmailHint"
+                aria-invalid="false"
+              />
+              <p
+                class="field__hint"
+                id="signupEmailHint"
+                aria-live="polite"
+              ></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="signupPassword">비밀번호</label>
+              <div class="field__row">
+                <input
+                  class="field__control"
+                  type="password"
+                  id="signupPassword"
+                  name="password"
+                  autocomplete="new-password"
+                  required
+                  aria-describedby="passwordRules strengthText"
+                />
+                <button
+                  type="button"
+                  class="btn btn--secondary toggle-password"
+                  data-target="signupPassword"
+                  data-name="비밀번호"
+                  aria-label="비밀번호 표시"
+                >
+                  표시
+                </button>
+              </div>
+              <div class="strength" aria-hidden="true">
+                <div id="strengthBar" class="strength-bar" data-level="0"></div>
+              </div>
+              <p id="strengthText" class="field__hint">비밀번호 강도: -</p>
+              <ul id="passwordRules" class="rules">
+                <li data-rule="length">8자 이상</li>
+                <li data-rule="letter">영문 포함</li>
+                <li data-rule="number">숫자 포함</li>
+                <li data-rule="special">특수문자 포함 (강도 상승)</li>
+              </ul>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="signupPasswordConfirm"
+                >비밀번호 확인</label
+              >
+              <div class="field__row">
+                <input
+                  class="field__control"
+                  type="password"
+                  id="signupPasswordConfirm"
+                  name="passwordConfirm"
+                  autocomplete="new-password"
+                  required
+                  aria-describedby="confirmHint"
+                  aria-invalid="false"
+                />
+                <button
+                  type="button"
+                  class="btn btn--secondary toggle-password"
+                  data-target="signupPasswordConfirm"
+                  data-name="비밀번호 확인"
+                  aria-label="비밀번호 확인 표시"
+                >
+                  표시
+                </button>
+              </div>
+              <p class="field__hint" id="confirmHint" aria-live="polite"></p>
+            </div>
+
+            <label class="check">
               <input type="checkbox" class="signupAgree" required />
               (필수) 사이트 약관에 동의합니다.
             </label>
             <p id="signupMessage" aria-live="polite"></p>
-            <button id="goLoginButton" type="button" hidden>
+            <button id="goLoginButton" class="btn" type="button" hidden>
               로그인하러 가기
             </button>
-            <button id="signupButton" type="submit" disabled>가입하기</button>
+            <button id="signupButton" class="btn" type="submit" disabled>
+              가입하기
+            </button>
           </form>
         </article>
 
         <div id="authStatus" hidden>
-          <p id="welcomeMessage" tabindex="-1"></p>
-          <button id="logoutButton" type="button">로그아웃</button>
+          <p id="welcomeMessage" class="status--filled" tabindex="-1"></p>
+          <button id="logoutButton" class="btn" type="button">로그아웃</button>
         </div>
       </section>
 
-      <section
-        id="config"
-        class="content-section"
-        aria-labelledby="config-title"
-      >
-        <article class="event-card">
-          <h2 id="config-title">화면 테마</h2>
-          <button
-            id="themeButton"
-            class="primary-button"
-            type="button"
-            aria-pressed="false"
-          >
-            다크 테마 사용
-          </button>
-        </article>
-      </section>
+      <theme-card></theme-card>
     </main>
 
-    <footer class="site-footer">
-      ⓒ 2026 외국어 단어 학습 서비스 Vocabulet.
-    </footer>
+    <site-footer></site-footer>
 
-    <script src="script.js"></script>
+    <!-- script.js는 components.js에 흡수되었으므로 불러오지 않는다 -->
+    <script src="components.js"></script>
     <script src="intro.js"></script>
     <script src="auth.js"></script>
   </body>

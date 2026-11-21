@@ -1,95 +1,74 @@
-let isSubscribed = false;
-let submitCount = 0;
-let subscriberEmail = "";
+(function () {
+  "use strict";
 
-const subscribeForm = document.querySelector("#subscribe-form");
-const emailInput = document.querySelector("#email");
-const subscribeButton = document.querySelector("#subscribeButton");
-const subscribeMessage = document.querySelector("#subscribeMessage");
+  const { $, $$, setStatus, bindField, validators, initAgreeGate } = UI;
 
-const requiredChecks = document.querySelectorAll(".agreeCheck[required]");
-const agreeChecks = document.querySelectorAll(".agreeCheck");
-const agreeMessage = document.querySelector("#agreeMessage");
+  const serviceName = "Vocabulet";
 
-function setEmailInvalid(invalid) {
-  emailInput.setAttribute("aria-invalid", String(invalid));
-}
+  let isSubscribed = false;
 
-function setSubscribeMessage(text, type) {
-  if (subscribeMessage.textContent !== text) {
-    subscribeMessage.textContent = text;
+  const subscribeForm = $("#subscribe-form");
+  const emailInput = $("#email");
+  const subscribeButton = $("#subscribeButton");
+  const subscribeMessage = $("#subscribeMessage");
+  const agreeMessage = $("#agreeMessage");
+  const agreeChecks = $$(".agreeCheck");
+
+  function updateSubscribeButton() {
+    if (isSubscribed) return;
+    const agreed = agreeChecks
+      .filter(function (c) {
+        return c.required;
+      })
+      .every(function (c) {
+        return c.checked;
+      });
+    subscribeButton.disabled = !(agreed && validators.email(emailInput).ok);
   }
-  subscribeMessage.classList.remove("is-success", "is-error");
-  if (type) subscribeMessage.classList.add("is-" + type);
-}
 
-function validateEmail() {
-  if (isSubscribed) return;
-  if (emailInput.value.trim() === "") {
-    setEmailInvalid(true);
-    setSubscribeMessage("이메일 입력란을 비워둘 수 없습니다.", "error");
-  } else if (emailInput.validity.typeMismatch) {
-    setEmailInvalid(true);
-    setSubscribeMessage("이메일 형식이 올바르지 않습니다.", "error");
-  } else {
-    setEmailInvalid(false);
-    setSubscribeMessage("", null);
-  }
-}
+  const emailField = bindField({
+    input: emailInput,
+    hint: subscribeMessage,
+    validate: validators.email,
+    showSuccess: false,
+    skip: function () {
+      return isSubscribed;
+    },
+    onChange: updateSubscribeButton,
+  });
 
-function handleEmailBlur() {
-  emailInput.dataset.touched = "true";
-  validateEmail();
-}
-
-function handleEmailInput() {
-  if (emailInput.dataset.touched === "true") validateEmail();
-}
-
-function makeSubscribeMessage(email) {
-  return `감사합니다! ${email}로 ${serviceName}의 리마인더를 받게 됩니다.`;
-}
-
-function handleSubscribe(event) {
-  event.preventDefault();
-  if (isSubscribed) return;
-
-  subscriberEmail = emailInput.value.trim();
-  if (subscriberEmail === "" || emailInput.validity.typeMismatch) {
-    setEmailInvalid(true);
-    setSubscribeMessage(
-      subscriberEmail === ""
-        ? "이메일을 입력해주세요."
-        : "이메일 형식이 올바르지 않습니다.",
-      "error",
+  initAgreeGate(agreeChecks, function (agreed) {
+    if (isSubscribed) return;
+    setStatus(
+      agreeMessage,
+      agreed
+        ? "필수 약관에 동의하셨습니다."
+        : "필수 약관 동의 후 이메일을 수신할 수 있습니다.",
+      agreed ? "success" : "error",
     );
-    emailInput.focus();
-    return;
-  }
+    updateSubscribeButton();
+  });
 
-  isSubscribed = true;
-  submitCount++;
-  setEmailInvalid(false);
-  setSubscribeMessage(makeSubscribeMessage(subscriberEmail), "success");
+  subscribeForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    if (isSubscribed) return;
 
-  subscribeButton.textContent = "신청 완료";
-  subscribeButton.disabled = true;
-}
+    if (!emailField.check()) {
+      emailInput.focus();
+      return;
+    }
 
-function handleAgreeChange() {
-  if (isSubscribed) return;
-  const agreed = Array.from(requiredChecks).every((c) => c.checked);
-  subscribeButton.disabled = !agreed;
-  agreeMessage.textContent = agreed
-    ? "필수 약관에 동의하셨습니다."
-    : "필수 약관 동의 후 이메일을 수신할 수 있습니다.";
-  agreeMessage.classList.toggle("is-success", agreed);
-  agreeMessage.classList.toggle("is-error", !agreed);
-}
-
-subscribeForm.addEventListener("submit", handleSubscribe);
-emailInput.addEventListener("blur", handleEmailBlur);
-emailInput.addEventListener("input", handleEmailInput);
-agreeChecks.forEach((checkbox) => {
-  checkbox.addEventListener("change", handleAgreeChange);
-});
+    isSubscribed = true;
+    setStatus(
+      subscribeMessage,
+      "감사합니다! " +
+        emailInput.value.trim() +
+        "로 " +
+        serviceName +
+        "의 리마인더를 받게 됩니다.",
+      "success",
+    );
+    subscribeButton.textContent = "신청 완료";
+    subscribeButton.disabled = true;
+  });
+})();

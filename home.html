@@ -15,38 +15,36 @@
   </head>
 
   <body>
-    <a class="skip-link" href="#top">본문 바로가기</a>
     <div id="liveStatus" class="sr-only" role="status" aria-live="polite"></div>
 
-    <header class="site-header">
-      <h1><a id="site-logo" href="index.html">Vocabulet</a></h1>
-      <p class="header-description">오늘도 단어를 학습합시다.</p>
-
-      <button
-        type="button"
-        id="menuButton"
-        class="menu-button"
-        aria-expanded="false"
-        aria-controls="mainNav"
-      >
-        메뉴
-      </button>
-      <nav id="mainNav" class="site-nav" aria-label="주요 메뉴">
-        <a href="#daily-review">일일 복습</a>
-        <a href="#add-word">단어 등록</a>
-        <a href="#wordbook">단어장</a>
-        <a href="#config">화면 테마</a>
-      </nav>
-    </header>
+    <site-header description="오늘도 단어를 학습합시다.">
+      <a href="#daily-review">일일 복습</a>
+      <a href="#add-word">단어 등록</a>
+      <a href="#wordbook">단어장</a>
+      <a href="#config">화면 테마</a>
+    </site-header>
 
     <main id="top" tabindex="-1">
+      <!-- 일일 복습 -->
       <section
         id="daily-review"
-        class="content-section"
+        class="card card--section"
         aria-labelledby="review-title"
       >
         <h2 id="review-title">일일 단어 복습</h2>
-        <p class="review-progress">1 / 10</p>
+        <p class="review-progress"></p>
+
+        <!-- 단어가 없을 때 보이는 빈 상태 -->
+        <div id="reviewEmpty" class="empty-state" hidden>
+          <p>
+            복습할 단어가 없습니다. 새 단어를 등록하거나 예시 단어를 불러와
+            보세요.
+          </p>
+          <a class="btn" href="#add-word">단어 등록하러 가기</a>
+          <button type="button" id="loadSamples" class="btn btn--secondary">
+            예시 단어 불러오기
+          </button>
+        </div>
 
         <article class="flash-card" id="flashCard" aria-label="단어 카드">
           <div class="flash-card-inner">
@@ -65,110 +63,137 @@
           <button
             type="button"
             id="flipButton"
+            class="btn btn--outline"
             aria-expanded="false"
             aria-controls="cardBack"
           >
             뜻 보기
           </button>
-          <button type="button" id="knowButton">알고 있어요</button>
-          <button type="button" id="unknownButton">모르겠어요</button>
+          <button type="button" id="knowButton" class="btn">알고 있어요</button>
+          <button type="button" id="unknownButton" class="btn btn--secondary">
+            모르겠어요
+          </button>
         </div>
       </section>
 
+      <!-- 단어 등록 (언어 옵션은 home.js의 LANGUAGES 설정에서 채움) -->
       <section
         id="add-word"
-        class="content-section"
+        class="card card--section"
         aria-labelledby="add-title"
       >
         <h2 id="add-title">새로운 단어 등록</h2>
-        <form id="word-form">
-          <label for="wordLanguage">언어</label>
-          <select id="wordLanguage" name="language">
-            <option>영어</option>
-            <option>일본어</option>
-            <option>중국어</option>
-            <option>스페인어</option>
-            <option>프랑스어</option>
-          </select>
+        <form id="word-form" class="form">
+          <div class="field">
+            <label class="field__label" for="wordLanguage">언어</label>
+            <select
+              class="field__control"
+              id="wordLanguage"
+              name="language"
+            ></select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="wordInput">단어</label>
+            <input
+              class="field__control"
+              type="text"
+              id="wordInput"
+              name="word"
+              required
+            />
+          </div>
+          <div class="field">
+            <label class="field__label" for="meaningInput">뜻</label>
+            <input
+              class="field__control"
+              type="text"
+              id="meaningInput"
+              name="meaning"
+              required
+            />
+          </div>
+          <div class="field">
+            <label class="field__label" for="exampleInput">예문 (선택)</label>
+            <textarea
+              class="field__control"
+              id="exampleInput"
+              name="example"
+            ></textarea>
+          </div>
 
-          <label for="wordInput">단어</label>
-          <input type="text" id="wordInput" name="word" required />
-
-          <label for="meaningInput">뜻</label>
-          <input type="text" id="meaningInput" name="meaning" required />
-
-          <label for="exampleInput">예문 (선택)</label>
-          <textarea id="exampleInput" name="example"></textarea>
-
-          <button type="submit" id="wordSubmit" disabled>단어 등록</button>
-          <button type="button" id="editCancel" hidden>수정 취소</button>
-
+          <button type="submit" id="wordSubmit" class="btn" disabled>
+            단어 등록
+          </button>
+          <button
+            type="button"
+            id="editCancel"
+            class="btn btn--secondary"
+            hidden
+          >
+            수정 취소
+          </button>
           <p id="wordMessage" aria-live="polite"></p>
         </form>
       </section>
 
+      <!-- 단어장 -->
       <section
         id="wordbook"
-        class="content-section"
+        class="card card--section"
         aria-labelledby="wordbook-title"
       >
         <h2 id="wordbook-title" tabindex="-1">단어장</h2>
-        <div class="word-filters" role="group" aria-label="단어 필터">
-          <button
-            type="button"
-            class="filter-button active"
-            data-filter="all"
-            aria-pressed="true"
-            aria-controls="wordList"
-          >
-            전체
-          </button>
-          <button
-            type="button"
-            class="filter-button"
-            data-filter="known"
-            aria-pressed="false"
-            aria-controls="wordList"
-          >
-            알고 있는 단어
-          </button>
-          <button
-            type="button"
-            class="filter-button"
-            data-filter="unknown"
-            aria-pressed="false"
-            aria-controls="wordList"
-          >
-            모르는 단어
-          </button>
+
+        <div class="filter-bar">
+          <div class="word-filters" role="group" aria-label="단어 필터">
+            <button
+              type="button"
+              class="chip"
+              data-filter="all"
+              aria-pressed="true"
+              aria-controls="wordList"
+            >
+              전체
+            </button>
+            <button
+              type="button"
+              class="chip"
+              data-filter="known"
+              aria-pressed="false"
+              aria-controls="wordList"
+            >
+              알고 있는 단어
+            </button>
+            <button
+              type="button"
+              class="chip"
+              data-filter="unknown"
+              aria-pressed="false"
+              aria-controls="wordList"
+            >
+              모르는 단어
+            </button>
+          </div>
+          <div class="field">
+            <label class="field__label" for="languageFilter">언어별 보기</label>
+            <select
+              class="field__control"
+              id="languageFilter"
+              aria-controls="wordList"
+            ></select>
+          </div>
         </div>
+
         <p class="word-count" id="wordCount"></p>
         <ul class="word-list" id="wordList" role="list"></ul>
       </section>
 
-      <section
-        id="config"
-        class="content-section"
-        aria-labelledby="config-title"
-      >
-        <article class="event-card">
-          <h2 id="config-title">화면 테마</h2>
-          <button
-            id="themeButton"
-            class="primary-button"
-            type="button"
-            aria-pressed="false"
-          >
-            다크 테마 사용
-          </button>
-        </article>
-      </section>
+      <theme-card></theme-card>
     </main>
 
-    <footer class="site-footer">
-      ⓒ 2026 외국어 단어 학습 서비스 Vocabulet.
-    </footer>
-    <script src="script.js"></script>
+    <site-footer></site-footer>
+
+    <script src="components.js"></script>
     <script src="home.js"></script>
   </body>
 </html>
